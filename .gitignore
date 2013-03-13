@@ -1,2 +1,4 @@
 env
 runserver.sh
+*.pyc
+.DS_Store

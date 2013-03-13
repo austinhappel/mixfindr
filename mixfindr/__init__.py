@@ -1,8 +1,19 @@
 from pyramid.config import Configurator
 import os
+import redis
+from retools import global_connection
+from urlparse import urlparse
+
 
 # working directory
 here = os.path.dirname(os.path.abspath(__file__))
+
+# configure redis
+redis_url = urlparse(os.getenv('REDISTOGO_URL', 'redis://localhost:6379'))
+
+redis_host = '%s%s' % (redis_url.hostname, redis_url.path)
+redis_port = redis_url.port
+global_connection.redis = redis.Redis(host=redis_host, port=redis_port)
 
 
 def main(global_config, **settings):

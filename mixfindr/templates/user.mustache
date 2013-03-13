@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+    <head>
+        {{> mixfindr/templates/header}}    
+    </head>
+    <body>
+        {{> mixfindr/templates/search-bar}}
+        <div class="container">
+            <div class="container">
+                <h1>Mixes found for {{user}}'s top artists:</h1>
+            </div>
+            {{#user_top_artists_data}}
+            <div class="row">
+                {{#.}}
+                <div class="span4">
+                    <h4 class="artist-name">{{name}}</h4><a class="search-this-artist" href="{{url}}">Search this artist</a>
+                    <ul>
+                        {{#mixes}}
+                            <li><a href="{{url}}">{{title}}</a></li>
+                        {{/mixes}}
+                    </ul>
+                </div>
+                {{/.}}
+            </div>
+            {{/user_top_artists_data}}
+        </div>
+    </body>
+</html>

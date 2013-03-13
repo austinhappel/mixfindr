@@ -1,0 +1,20 @@
+.search {
+    background-color: #eee;
+    padding-bottom: 10px;
+    border-radius: 10px;
+}
+
+.search-field {
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+a.search-this-artist {
+    font-size: 10px;
+    display: inline-block;
+    margin-left: 13px;
+}
+
+h4.artist-name {
+    display: inline-block;
+}

@@ -5,6 +5,9 @@ import urllib
 import json
 import types
 import os
+from retools.cache import CacheRegion, cache_region, invalidate_function
+
+CacheRegion.add_region('short_term', expires=3600)
 
 # logging
 logging.basicConfig()
@@ -21,6 +24,7 @@ mixcloud_base_url = 'http://api.mixcloud.com/'
 
 
 # find mixes using mixcloud api
+@cache_region('short_term')
 def find_artist_mixes(artist_id):
     query = {
         'q': artist_id.encode('utf-8'),
@@ -52,6 +56,7 @@ def get_and_filter_artist_mixes(artist_id):
 
 
 # find similar artists using last.fm api
+@cache_region('short_term')
 def find_similar_artists(artist_id):
     url_similar_artists = '%s?method=artist.getsimilar&%s&format=json' % (last_fm_base_url, urllib.urlencode({'artist': artist_id.encode('utf-8'), 'api_key': last_fm_api_key}))
     req_similar_artists = urllib2.urlopen(url_similar_artists)
@@ -65,7 +70,9 @@ def find_similar_artists(artist_id):
 
 
 # get user's top artists from last.fm
+@cache_region('short_term')
 def get_user_top_artists(user_id):
+    log.debug('top arts')
     url_user_top_artists = '%s?method=user.gettopartists&%s&format=json' % (last_fm_base_url, urllib.urlencode({'user': user_id, 'api_key': last_fm_api_key}))
     req_user_top_artists = urllib2.urlopen(url_user_top_artists)
 

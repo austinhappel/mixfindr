@@ -9,11 +9,8 @@ from urlparse import urlparse
 here = os.path.dirname(os.path.abspath(__file__))
 
 # configure redis
-redis_url = urlparse(os.getenv('REDISTOGO_URL', 'redis://localhost:6379'))
-
-redis_host = '%s' % (redis_url.hostname)
-redis_port = redis_url.port
-global_connection.redis = redis.Redis(host=redis_host, port=redis_port)
+redis_url = os.getenv('REDISTOGO_URL', 'redis://localhost:6379')
+global_connection.redis = redis.from_url(redis_url)
 
 
 def main(global_config, **settings):

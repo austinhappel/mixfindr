@@ -34,7 +34,6 @@ def find_artist_mixes(artist_id):
     url_artist_mixes = '%ssearch/?%s' % (mixcloud_base_url, urllib.urlencode(query))
     req_artist_mixes = urllib2.urlopen(url_artist_mixes)
     if req_artist_mixes.code == 200:
-        log.debug('artist mixes!')
         artist_mixes = json.load(req_artist_mixes)
     else:
         artist_mixes = ''
@@ -58,10 +57,10 @@ def get_and_filter_artist_mixes(artist_id):
 # find similar artists using last.fm api
 @cache_region('short_term')
 def find_similar_artists(artist_id):
-    url_similar_artists = '%s?method=artist.getsimilar&%s&format=json' % (last_fm_base_url, urllib.urlencode({'artist': artist_id.encode('utf-8'), 'api_key': last_fm_api_key}))
+    url_similar_artists = '%s?method=artist.getsimilar&%s&limit5&format=json' % (last_fm_base_url, urllib.urlencode({'artist': artist_id.encode('utf-8'), 'api_key': last_fm_api_key}))
     req_similar_artists = urllib2.urlopen(url_similar_artists)
 
-    if req_similar_artists == 200:
+    if req_similar_artists.code == 200:
         similar_artists = json.load(req_similar_artists)
     else:
         similar_artists = ''
@@ -112,8 +111,9 @@ def artist_view(request):
 
     # last.fm api returns array if there are similar artists, or a string if there
     # are none. Need to check for this.
-    if hasattr(similar_artists, 'similarartists') and\
+    if 'similarartists' in similar_artists and\
             isinstance(similar_artists['similarartists']['artist'], types.ListType):
+
         for x in similar_artists['similarartists']['artist'][0:5]:
             similar_artists_links.append({
                 'name': x['name'].encode('ascii', 'xmlcharrefreplace'),
@@ -144,7 +144,6 @@ def user_view(request):
     count = 0
     row = 0
     for x in user_top_artists['topartists']['artist'][0:6]:
-        log.debug(row)
         user_top_artists_data[row].append({
             'name': x['name'],
             'url': urllib2.quote(x['name'].encode('utf-8')),
@@ -177,9 +176,3 @@ def api_artist_view(request):
 @view_config(context='pyramid.exceptions.NotFound', renderer='mixfindr:templates/404.mustache')
 def notfound_view(self):
     return {}
-
-
-
-# @view_config(route_name='home', renderer='templates/mytemplate.pt')
-# def my_view(request):
-#     return {'project': 'mixfindr'}

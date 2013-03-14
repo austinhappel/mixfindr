@@ -1,7 +1,27 @@
-.search {
-    background-color: #eee;
-    padding-bottom: 10px;
+/* `fonts
+----------------------------------------*/
+@import url(http://fonts.googleapis.com/css?family=Comfortaa:700);
+
+
+/* `generic
+----------------------------------------*/
+
+body {
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAJUlEQVQIW2OUk5f5//XrNwYYYBQWEfoP5wEZcAFubi4GkEoMFQC1eQrlYxFZWwAAAABJRU5ErkJggg==);
+    repeat: repeat;
+}
+
+
+
+/* `search
+----------------------------------------*/
+
+.search .span6 {
+    background: -webkit-linear-gradient(#ccc, #aaa, #ccc);
+    box-shadow: 7px 7px 0px #222;
+    padding-bottom: 14px;
     border-radius: 10px;
+    float: left;
 }
 
 .search-field {
@@ -17,4 +37,79 @@ a.search-this-artist {
 
 h4.artist-name {
     display: inline-block;
+    color: #fff;
+}
+
+
+
+/* `title
+----------------------------------------*/
+
+h1.title.huge {
+    font-size: 10em;
+    text-align: center;
+}
+
+h1.title{
+    position: relative;
+    color: #333;
+    font-family:'Comfortaa', helvetica, arial, sans-serif;
+    font-weight: bold;
+    line-height: 1em;
+    /*background: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), color-stop(50%, rgba(0,0,0,.5)), to(rgba(0,0,0,1)));
+    -webkit-background-clip: text;*/
+    /*text-shadow: 4px 4px 15px #fff;*/
+}
+
+h1.title span {
+    text-decoration: none;
+    color: #b4d455;
+    position: absolute;  
+/*    -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), color-stop(50%, rgba(0,0,0,.5)), to(rgba(0,0,0,1)));
+    -webkit-background-clip: text;*/
+}
+
+h1.title:after {  
+    content : 'Mixfindr';  
+    color: #d6d6d6;  
+    text-shadow: 5px 5px 1px #023233;
+}
+
+.description {
+    color: #eee;
+    text-align: center;
+    font-size: 1.4em;
+    line-height: 1.3em;
+    letter-spacing: 1px;
+    padding-bottom: 10px;
+}
+
+
+/* `anchors
+----------------------------------------*/
+
+a {
+    color: #e620a1;
+}
+
+/* `results
+----------------------------------------*/
+
+.result h1 {
+    color: #b4d455;
+}
+
+.result li {
+    color: #fff;
+}
+
+.result h4 {
+    color: #fff;
+}
+
+.result a {
+    color: #20dfe6;
+}
+.result a:visited {
+    color: #e620a1;
 }

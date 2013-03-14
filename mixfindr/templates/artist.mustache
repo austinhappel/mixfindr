@@ -4,16 +4,17 @@
         {{> mixfindr/templates/header}}    
     </head>
     <body>
+        {{> mixfindr/templates/title}}
         {{> mixfindr/templates/search-bar}}
-        <div class="container">
+        <div class="container result">
             <div class="row">
                 <div class="span12">
-                    <h1>Artist search: {{& artist}}</h1>    
+                    <h1 class="result-title">Artist search: {{& artist}}</h1>    
                 </div>    
             </div>
             <div class="row">
                 <div class="span4">
-                    <h3>Similar artists:</h3>
+                    <h4>Similar artists:</h4>
                     <ul>
                     {{#similar_artists_links}}
                         <li><a href="{{url}}">{{& name}}</a></li>
@@ -21,10 +22,10 @@
                     </ul>
                 </div>
                 <div class="span4">
-                    <h3>Mixes:</h3>
+                    <h4>Mixes:</h4>
                     <ul>
                         {{#filtered_artist_mixes}}
-                        <li><a href="{{url}}">{{title}}</a></li>
+                        <li><a href="{{url}}" rel="external">{{title}}</a></li>
                         {{/filtered_artist_mixes}}
                     </ul>
                 </div>

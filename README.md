@@ -6,7 +6,10 @@ You can also do an artist search, which will find mixes for that artist, and als
 
 # installation notes
 
+**Note** *You'll need [Redis](http://redis.io/) to run this app. Redis is used to cache API requests.
+
 1. Get virtualenv
+2. Install [Redis](http://redis.io/).
 2. Make virtual environment
 
         mkdir env && virtualenv env
@@ -20,6 +23,7 @@ environment variable up:
 
         export last_fm_api_key=<your api key>
 
+5. 
 
 # running locally
 

@@ -8,22 +8,31 @@ You can also do an artist search, which will find mixes for that artist, and als
 
 **Note** *You'll need [Redis](http://redis.io/) to run this app. Redis is used to cache API requests.
 
+After cloning the repo and `cd`ing into the main directory:
+
 1. Get virtualenv
 2. Install [Redis](http://redis.io/).
-2. Make virtual environment
+3. Make virtual environment
 
         mkdir env && virtualenv env
         
-3. In env, install pip requirements
+4. In env, install pip requirements
 
         pip install -r requirements.txt
 
-4. Last.fm requires an api key for some reason. Set the following
+5. Last.fm requires an api key for some reason. Set the following
 environment variable up:
 
         export last_fm_api_key=<your api key>
 
-5. 
+6. Set up the development app with:
+
+        python setup.py develop
+
+7. Run the app.
+
+        pserve development.ini
+
 
 # running locally
 

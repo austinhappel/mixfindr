@@ -28,6 +28,7 @@ def main(global_config, **settings):
     config.add_route('artist', '/artist/{id}')
     config.add_route('api_artist', '/api/artist/{id}')
     config.add_route('user', '/user/{id}')
+    config.add_route('error', '/error')
 
     # scan for @view_config and @subscriber decorators
     config.scan()

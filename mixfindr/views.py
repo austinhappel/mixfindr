@@ -5,7 +5,8 @@ import urllib
 import json
 import types
 import os
-from retools.cache import CacheRegion, cache_region, invalidate_function
+from retools.cache import CacheRegion, cache_region  # , invalidate_function
+from pyramid.httpexceptions import HTTPFound
 
 CacheRegion.add_region('short_term', expires=3600)
 
@@ -37,7 +38,8 @@ def find_artist_mixes(artist_id):
     if req_artist_mixes.code == 200:
         artist_mixes = json.load(req_artist_mixes)
     else:
-        raise ValueError('Mixcloud API error: %s' % req_artist_mixes.code)
+        log.debug('Mixcloud API error: %s' % req_artist_mixes.code)
+        return False
 
     return artist_mixes
 
@@ -66,10 +68,12 @@ def find_similar_artists(artist_id):
         similar_artists = json.load(req_similar_artists)
 
         if 'error' in similar_artists:
-            raise ValueError('Last.FM API error: %s' % similar_artists)
+            log.debug('Last.FM API error: %s' % similar_artists)
+            return False
 
     else:
-        raise ValueError('Last.FM API error: %s' % req_similar_artists.code)
+        log.debug('Last.FM API error: %s' % req_similar_artists.code)
+        return False
 
     return similar_artists
 
@@ -84,12 +88,21 @@ def get_user_top_artists(user_id):
         user_top_artists = json.load(req_user_top_artists)
 
         if 'error' in user_top_artists:
-            raise ValueError('Last.FM API error: %s' % user_top_artists)
+            log.debug('Last.FM API error: %s' % user_top_artists)
+            return False
 
     else:
-        raise ValueError('Last.FM API error: %s' % req_user_top_artists.code)
+        log.debug('Last.FM API error: %s' % req_user_top_artists.code)
+        return False
 
     return user_top_artists
+
+
+# generic error view
+@view_config(route_name='error', renderer='mixfindr:templates/error.mustache')
+def error_view(request):
+    data = {}
+    return data
 
 
 # url: /
@@ -107,6 +120,10 @@ def artist_view(request):
     artist_mixes = find_artist_mixes(artist_id)
 
     filtered_artist_mixes = []
+
+    if artist_mixes is False or similar_artists is False:
+        url = request.route_url('error')
+        return HTTPFound(location=url)
 
     # filter out just the name and url of found mixcloud mixes
     for mix in artist_mixes['data']:
@@ -146,6 +163,10 @@ def user_view(request):
     user_top_artists = get_user_top_artists(user_id)
     user_top_artists_data = [[]]
 
+    if user_top_artists is False:
+        url = request.route_url('error')
+        return HTTPFound(location=url)
+
     # loop through the top 6 artists
     # create links for artists
     # get mixcloud mixes
@@ -179,6 +200,11 @@ def user_view(request):
 def api_artist_view(request):
     artist_id = str(request.matchdict['id'])
     artist_mixes = get_and_filter_artist_mixes(artist_id)
+
+    if artist_mixes is False:
+        url = request.route_url('error')
+        return HTTPFound(location=url)
+
     return artist_mixes
 
 

@@ -12,7 +12,13 @@ body {
     repeat: repeat;
 }
 
+h1 {
+    color: #fff;
+}
 
+.error h1 {
+    padding: 14px 0 14px 0;
+}
 
 /* `search
 ----------------------------------------*/

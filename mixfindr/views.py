@@ -177,7 +177,7 @@ def user_view(request):
     for x in user_top_artists['topartists']['artist'][0:6]:
         user_top_artists_data[row].append({
             'name': x['name'],
-            'url': urllib2.quote(x['name'].encode('utf-8')),
+            'url': '/artist/' + urllib2.quote(x['name'].encode('utf-8')),
             'mixes': get_and_filter_artist_mixes(x['name'])
         })
 

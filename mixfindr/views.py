@@ -163,7 +163,8 @@ def user_view(request):
     user_top_artists = get_user_top_artists(user_id)
     user_top_artists_data = [[]]
 
-    if user_top_artists is False:
+    if user_top_artists is False or 'topartists' not in user_top_artists or\
+            'artist' not in user_top_artists['topartists']:
         url = request.route_url('error')
         return HTTPFound(location=url)
 
